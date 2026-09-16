@@ -4,7 +4,7 @@ import lombok.Getter;
 import java.util.UUID;
 
 @Getter
-public class User {
+public final class User {
 
     private final String userId;
 
@@ -23,6 +23,7 @@ public class User {
     }
 
     public static User createUser(String name, String email, Gender gender){
+        validateInformations(email);
         return new User(generateUserId(),name, email, gender);
     }
 
@@ -32,5 +33,12 @@ public class User {
 
     private static String generateUserId(){
         return "USER-" + UUID.randomUUID();
+    }
+
+    private static void validateInformations(String email){
+
+        if(email.isEmpty() || email.isBlank()){
+            throw new IllegalArgumentException("Erreur l'email ne doit pas etre vide");
+        }
     }
 }
